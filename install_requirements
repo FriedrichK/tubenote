@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+if [ ! -d venv ]; then
+	virtualenv venv --no-site-packages
+fi
+venv/bin/pip install -r requirements.txt

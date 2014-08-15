@@ -1,0 +1,12 @@
+# Linux
+*~
+
+# Python
+*.pyc
+
+# Virtualenv
+venv/
+
+# Sublime Text
+tubenote.sublime-project
+tubenote.sublime-workspace
