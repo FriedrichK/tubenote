@@ -90,8 +90,8 @@ STATIC_URL = '/static/'
 
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 os.environ['REUSE_DB'] = "1"
-if 'test' in sys.argv:
-    DATABASES['default'] = {'ENGINE': 'django.db.backends.sqlite3'}
+#if 'test' in sys.argv:
+#    DATABASES['default'] = {'ENGINE': 'django.db.backends.sqlite3'}
 NOSE_ARGS = [
     '--with-coverage',
     '--cover-package=shared,user_account'

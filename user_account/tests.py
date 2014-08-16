@@ -13,10 +13,12 @@ from rest_framework import permissions
 from rest_framework.authtoken.models import Token
 
 from user_account.registration import register_user
+from user_account.exceptions import UsernameAlreadyExistsException
 
 TEST_USER_NAME = "test_user"
 TEST_USER_EMAIL = "test@user.com"
 TEST_USER_PASSWORD = "test_password"
+TEST_USER_INCORRECT_PASSWORD = 'not_the_test_password'
 TEST_RESPONSE_CONTENT = "this content is what we expected"
 TEST_TOKEN = "test_token"
 
@@ -32,10 +34,14 @@ class RegistrationTestCase(TestCase):
         self.assertIsInstance(token, Token)
 
     def test_returns_existing_token_if_username_and_password_match_existing_user(self):
-        pass
+        user = User.objects.create_user(TEST_USER_NAME, TEST_USER_EMAIL, TEST_USER_PASSWORD)
+        token = Token.objects.create(user=user)
+        actual = register_user(TEST_USER_NAME, TEST_USER_EMAIL, TEST_USER_PASSWORD)
+        self.assertEqual(actual.key, token.key)
 
     def test_raises_appropriate_exception_if_username_already_exists_but_password_does_not_match(self):
-        pass
+        User.objects.create_user(TEST_USER_NAME, TEST_USER_EMAIL, TEST_USER_PASSWORD)
+        self.assertRaises(UsernameAlreadyExistsException, register_user, TEST_USER_NAME, TEST_USER_EMAIL, TEST_USER_INCORRECT_PASSWORD)
 
     @patch('user_account.views.register_user')
     def test_registration_view_returns_token_as_expected(self, register_user_mock):
