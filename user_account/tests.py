@@ -14,7 +14,7 @@ TEST_USER_PASSWORD = "test_password"
 TEST_RESPONSE_CONTENT = "this content is what we expected"
 
 
-class MessageTestCase(TestCase):
+class AuthenticationTestCase(TestCase):
 
     def setUp(self):
         self.factory = APIRequestFactory()
