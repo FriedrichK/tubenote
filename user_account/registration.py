@@ -25,4 +25,9 @@ def return_token_for_existing_user(username, password):
 
 
 def get_or_create_token_for_user(user):
-    return Token.objects.filter(user=user).order_by('-created')[0]
+    result = Token.objects.filter(user=user).order_by('-created')
+    if isinstance(result, Token):
+        return result
+    if result is None or len(result) < 1:
+        return Token.objects.create(user=user)
+    return result[0]
