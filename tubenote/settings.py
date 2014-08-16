@@ -43,6 +43,8 @@ INSTALLED_APPS = (
 
     'user_account',
     'message',
+
+    'south',
 )
 
 MIDDLEWARE_CLASSES = (
