@@ -15,12 +15,7 @@ from rest_framework.authtoken.models import Token
 from user_account.registration import register_user
 from user_account.exceptions import UsernameAlreadyExistsException
 
-TEST_USER_NAME = "test_user"
-TEST_USER_EMAIL = "test@user.com"
-TEST_USER_PASSWORD = "test_password"
-TEST_USER_INCORRECT_PASSWORD = 'not_the_test_password'
-TEST_RESPONSE_CONTENT = "this content is what we expected"
-TEST_TOKEN = "test_token"
+from shared.testing import TEST_USER_NAME, TEST_USER_EMAIL, TEST_USER_PASSWORD, TEST_USER_INCORRECT_PASSWORD, TEST_RESPONSE_CONTENT, TEST_TOKEN
 
 
 class RegistrationTestCase(TestCase):
