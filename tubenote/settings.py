@@ -37,6 +37,12 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'rest_framework',
+    'rest_framework.authtoken',
+
+    'user_account',
+    'message',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -86,3 +92,10 @@ TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 os.environ['REUSE_DB'] = "1"
 if 'test' in sys.argv:
     DATABASES['default'] = {'ENGINE': 'django.db.backends.sqlite3'}
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+        'user_account.authentication.UserNameAuthentication',
+    )
+}

@@ -3,6 +3,8 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 admin.autodiscover()
 
+import message
+
 urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'tubenote.views.home', name='home'),
