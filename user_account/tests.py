@@ -31,6 +31,12 @@ class RegistrationTestCase(TestCase):
         token = register_user(TEST_USER_NAME, TEST_USER_EMAIL, TEST_USER_PASSWORD)
         self.assertIsInstance(token, Token)
 
+    def test_returns_existing_token_if_username_and_password_match_existing_user(self):
+        pass
+
+    def test_raises_appropriate_exception_if_username_already_exists_but_password_does_not_match(self):
+        pass
+
     @patch('user_account.views.register_user')
     def test_registration_view_returns_token_as_expected(self, register_user_mock):
         register_user_mock.return_value = MockToken(TEST_TOKEN)
