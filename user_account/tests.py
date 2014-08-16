@@ -1,3 +1,7 @@
+import json
+
+from mock import patch
+
 from django.test import TestCase
 from django.http import HttpResponse
 from django.contrib.auth.models import User
@@ -8,10 +12,47 @@ from rest_framework.views import APIView
 from rest_framework import permissions
 from rest_framework.authtoken.models import Token
 
+from user_account.registration import register_user
+
 TEST_USER_NAME = "test_user"
 TEST_USER_EMAIL = "test@user.com"
 TEST_USER_PASSWORD = "test_password"
 TEST_RESPONSE_CONTENT = "this content is what we expected"
+TEST_TOKEN = "test_token"
+
+
+class RegistrationTestCase(TestCase):
+
+    def setUp(self):
+        self.factory = APIRequestFactory()
+        self.client = APIClient()
+
+    def test_returns_token_on_user_registration(self):
+        token = register_user(TEST_USER_NAME, TEST_USER_EMAIL, TEST_USER_PASSWORD)
+        self.assertIsInstance(token, Token)
+
+    @patch('user_account.views.register_user')
+    def test_registration_view_returns_token_as_expected(self, register_user_mock):
+        register_user_mock.return_value = MockToken(TEST_TOKEN)
+
+        response = self.client.post('/api/account/', {'username': TEST_USER_NAME, 'email': TEST_USER_EMAIL, 'password': TEST_USER_PASSWORD})
+        self.assertEqual(json.loads(response.content)['token'], TEST_TOKEN)
+
+    def test_registration_view_returns_error_if_no_information_is_given(self):
+        response = self.client.post('/api/account/', {'email': TEST_USER_EMAIL, 'password': TEST_USER_PASSWORD})
+        self.assertEqual(response.status_code, 400)
+
+    def test_registration_view_returns_error_if_username_is_missing(self):
+        response = self.client.post('/api/account/', {'email': TEST_USER_EMAIL, 'password': TEST_USER_PASSWORD})
+        self.assertEqual(response.status_code, 400)
+
+    def test_registration_view_returns_error_if_email_is_missing(self):
+        response = self.client.post('/api/account/', {'username': TEST_USER_NAME, 'password': TEST_USER_PASSWORD})
+        self.assertEqual(response.status_code, 400)
+
+    def test_registration_view_returns_error_if_password_is_missing(self):
+        response = self.client.post('/api/account/', {'username': TEST_USER_NAME, 'email': TEST_USER_EMAIL})
+        self.assertEqual(response.status_code, 400)
 
 
 class AuthenticationTestCase(TestCase):
@@ -45,3 +86,8 @@ class RequestTestView(APIView):
 
     def post(self, request, format=None):
         return HttpResponse(TEST_RESPONSE_CONTENT)
+
+
+class MockToken(object):
+    def __init__(self, token):
+        self.key = token
