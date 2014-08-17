@@ -18,3 +18,9 @@ class UserNameAuthentication(authentication.BaseAuthentication):
             return (AnonymousButNamedUser(user), None)
 
         return None
+
+
+def user_is_enabled(user):
+    if not user.is_active:
+        return False
+    return True
