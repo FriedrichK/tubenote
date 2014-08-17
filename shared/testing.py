@@ -1,3 +1,6 @@
+EMPTY_USER = None
+GENERIC_MOCK_RESULT = 'we can put this when it does not matter what the result really is'
+
 TEST_USER_NAME = "test_user"
 TEST_USER_EMAIL = "test@user.com"
 TEST_USER_PASSWORD = "test_password"

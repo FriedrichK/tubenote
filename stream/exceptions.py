@@ -1,0 +1,2 @@
+class InvalidStreamIdentfierException(Exception):
+    pass

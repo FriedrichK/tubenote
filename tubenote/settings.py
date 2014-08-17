@@ -43,6 +43,7 @@ INSTALLED_APPS = (
 
     'user_account',
     'message',
+    'stream',
 
     'south',
 )
@@ -96,7 +97,7 @@ os.environ['REUSE_DB'] = "1"
 #    DATABASES['default'] = {'ENGINE': 'django.db.backends.sqlite3'}
 NOSE_ARGS = [
     '--with-coverage',
-    '--cover-package=shared,user_account'
+    '--cover-package=shared,user_account,message,stream'
 ]
 
 REST_FRAMEWORK = {
