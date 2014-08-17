@@ -15,4 +15,5 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
 
     url(r'^api/account/', include(user_account.urls)),
+    url(r'^api/message/', include(message.urls)),
 )
