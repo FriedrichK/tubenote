@@ -42,7 +42,7 @@ def create_stream(user, stream_identifier):
 
 
 def stream_identifier_is_valid(stream_identifier):
-    if not isinstance(stream_identifier, str) or isinstance(stream_identifier, unicode):
+    if not isinstance(stream_identifier, str) and not isinstance(stream_identifier, unicode):
         return False
     if stream_identifier == '':
         return False

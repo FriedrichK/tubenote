@@ -1,6 +1,6 @@
 import json
 
-from django.http import HttpResponseBadRequest
+from django.http import HttpResponseBadRequest, HttpResponseNotFound
 
 from rest_framework.response import Response
 
@@ -16,4 +16,10 @@ class RestHttpResponse(Response):
 class RestHttpResponseBadRequest(HttpResponseBadRequest):
     def __init__(self, content=b'', *args, **kwargs):
         super(RestHttpResponseBadRequest, self).__init__(*args, **kwargs)
+        self.content = json.dumps({'success': False, 'data': None, 'message': content})
+
+
+class RestHttpResponseNotFound(HttpResponseNotFound):
+    def __init__(self, content=b'', *args, **kwargs):
+        super(RestHttpResponseNotFound, self).__init__(*args, **kwargs)
         self.content = json.dumps({'success': False, 'data': None, 'message': content})

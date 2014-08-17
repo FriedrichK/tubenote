@@ -4,7 +4,7 @@ from django.contrib import admin
 admin.autodiscover()
 
 import message
-
+import stream
 import user_account
 
 urlpatterns = patterns('',
@@ -16,4 +16,5 @@ urlpatterns = patterns('',
 
     url(r'^api/account/', include(user_account.urls)),
     url(r'^api/message/', include(message.urls)),
+    url(r'^api/stream/', include(stream.urls)),
 )
