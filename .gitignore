@@ -7,7 +7,7 @@
 # Virtualenv
 venv/
 
-# Coerage
+# Coverage
 cover/
 .coverage
 
