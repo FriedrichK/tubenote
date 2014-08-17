@@ -5,7 +5,7 @@ admin.autodiscover()
 
 import message
 import stream
-import user_account
+from user_account import urls as user_account_urls
 
 urlpatterns = patterns('',
     # Examples:
@@ -14,7 +14,7 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
 
-    url(r'^api/account/', include(user_account.urls)),
+    url(r'^api/account/', include(user_account_urls)),
     url(r'^api/message/', include(message.urls)),
     url(r'^api/stream/', include(stream.urls)),
 )
