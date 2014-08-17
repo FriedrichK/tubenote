@@ -12,8 +12,11 @@ def create_or_return_stream(user, stream_identifier):
     return create_stream(stream_identifier)
 
 
-def get_stream_by_identifier(user, stream_identifier):
-    pass
+def get_stream_by_identifier(stream_identifier):
+    try:
+        return Stream.objects.get(identifier=stream_identifier)
+    except Stream.DoesNotExist:
+        return None
 
 
 def create_stream(user, stream_identifier):

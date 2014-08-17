@@ -6,10 +6,12 @@ from django.contrib.auth.models import User
 from shared.testing import GENERIC_MOCK_RESULT, EMPTY_USER, TEST_USER_NAME
 from user_account.models import AnonymousButNamedUser
 from user_account.exceptions import InvalidUserException, UserIsNotEnabledException
-from stream.tools import create_or_return_stream, create_stream
+from stream.models import Stream
+from stream.tools import create_or_return_stream, create_stream, get_stream_by_identifier
 
 
 MOCK_STREAM_IDENTIFIER = 'this_is_a_mock_stream_identifier'
+MOCK_STREAM_IDENTIFIER_THAT_DOES_NOT_EXIST = 'this does not exist'
 
 
 class StreamTestCase(TestCase):
@@ -62,13 +64,23 @@ class StreamTestCase(TestCase):
         self.assertEquals(actual.created_by_username, TEST_USER_NAME)
         self.assertEquals(actual.identifier, MOCK_STREAM_IDENTIFIER)
 
+    def test_returns_expected_streamm_by_identifier(self):
+        stream = Stream(identifier=MOCK_STREAM_IDENTIFIER)
+        stream.save()
+
+        actual = get_stream_by_identifier(MOCK_STREAM_IDENTIFIER)
+
+        self.assertEqual(actual.identifier, MOCK_STREAM_IDENTIFIER)
+
+    def test_throws_expected_exception_if_stream_does_not_exist(self):
+        self.assertIsNone(get_stream_by_identifier(MOCK_STREAM_IDENTIFIER_THAT_DOES_NOT_EXIST))
+
     def test_returns_expected_stream_dump(self):
         user = User(username=TEST_USER_NAME)
         user.save()
 
         result = create_stream(user, MOCK_STREAM_IDENTIFIER)
         actual = result.dump()
-        print actual
 
         self.assertEqual(actual['identifier'], MOCK_STREAM_IDENTIFIER)
         self.assertEqual(actual['created_by_user'], user.id)
